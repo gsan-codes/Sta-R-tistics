@@ -11,7 +11,7 @@ Introduction to the basics of R and statistics with the aim of making you a stat
 4. Graphing and Visualization (ggplot, heatmaps, corrplot)
 5. Bayesian Statictics   
 
-See the tentative schedule below: 
+## See the tentative schedule below: 
 
 1) Basics I (R interfaces, variables and data types, data loading) [Feb 17; 6-8pm]
 2) Basics II (loops, data manipulation and summarizing, functions) [week of Feb 24; 5-7pm]<br>
@@ -25,10 +25,10 @@ See the tentative schedule below:
 8) Bayesian Statistics II (MCMC sampling, t-test, Bayesian regression models) [early May]
 
 
-If you have any questions please contact jason.dasilvacastanheira@mail.mcgill.ca or GSAN
+If you have any questions please contact jason.dasilvacastanheira@mail.mcgill.ca or GSAN at gsan.mcgill@gmail.com
 
 
-Data for the class was taken from the following sources:
+## Data for the class was taken from the following sources:
 
 https://www.kaggle.com/ruslankl/mice-protein-expression
 
@@ -37,7 +37,7 @@ https://www.kaggle.com/osmi/mental-health-in-tech-survey
 https://data.world/kcmillersean/billboard-hot-100-1958-2017
 
 
-****Helpful resoruces for coding in R and statistics: 
+# Helpful resoruces for coding in R and statistics: 
 
 Basics: 
 https://bookdown.org/ndphillips/YaRrr/ <br>
@@ -67,5 +67,3 @@ Cognitive control data -- https://figshare.com/articles/dataset/Flanker_Stroop_m
 <br>
 Statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
-
-....
