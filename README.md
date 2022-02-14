@@ -61,12 +61,6 @@ MiCM: https://www.mcgill.ca/micm/training/workshops-series/workshop-materials <b
 Platforms: <br>
 Github (https://github.com/) : Many packages in development live here, can report issues, participate in discussion forums and host your own code. <br>
 Compute Canada (https://www.computecanada.ca/research-portal/): Canadian computational resources consortium, maintains supercomputing clusters that you can access for free, provides a lot of technical support.   <br> <br>
-Data: <br>
-Mental health survey dataset: https://www.kaggle.com/osmi/mental-health-in-tech-survey <br>
-Mouse gene expression dataset: https://www.kaggle.com/ruslankl/mice-protein-expression/activity  <br>
-Spotify dataset (good practice for basics and stats): https://data.world/kcmillersean/billboard-hot-100-1958-2017 <br>
-Cognitive control data -- https://figshare.com/articles/dataset/Flanker_Stroop_mouse-tracking_data/11320100 <br>
-<br>
 Statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
 Resources for plotting and assumption testing: https://remi-theriault.com/tutorials/ <br>
