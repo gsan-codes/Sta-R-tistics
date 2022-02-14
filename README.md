@@ -36,6 +36,8 @@ https://www.kaggle.com/osmi/mental-health-in-tech-survey
 
 https://data.world/kcmillersean/billboard-hot-100-1958-2017
 
+https://figshare.com/articles/dataset/Flanker_Stroop_mouse-tracking_data/11320100 
+
 
 # Helpful resoruces for coding in R and statistics: 
 
