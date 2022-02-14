@@ -67,3 +67,6 @@ Cognitive control data -- https://figshare.com/articles/dataset/Flanker_Stroop_m
 <br>
 Statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
+Resources for plotting and assumption testing: https://remi-theriault.com/tutorials/ <br>
+
+
