@@ -281,15 +281,15 @@ bayesfactor(bridge_sampler(model_bayes), bridge_sampler(model_bayes2))
 
 
 # Run code in BRMS (Bayesian Regressions)
-# -------------------------------------------------------------------------------------
+####################################################################
 library(brms)
+# Let us look at an experiment where participants preformed both a Flanker AND a Stroop Task
+data=read.csv('~/Documents/GitHub/Sta-R-tistics/data/Cognitive_control.csv')
 
 model_Dprime = brms::brm(
-  d.prime ~  (1 |subject_code) + Load+Task+Load:Task,
-  data = df2, control=list(adapt_delta=0.99), iter=10000, thin=10
-)
+  RT ~  (1 |subject) + current.trial, data = data, iter=10000, thin=10)
 
-get_prior(d.prime ~  (1 |subject_code) + Load+Task+Load:Task, data = df2)
+get_prior(RT ~  (1 |subject) + current.trial, data = data)
 
 summary(model_Dprime)
 plot(model_Dprime)
