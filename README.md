@@ -41,29 +41,27 @@ https://figshare.com/articles/dataset/Flanker_Stroop_mouse-tracking_data/1132010
 
 # Helpful resoruces for coding in R and statistics: 
 
-##Basics:
- 
+## Basics: <br> 
 https://bookdown.org/ndphillips/YaRrr/ <br>
 R Studio cheat sheets: https://www.rstudio.com/resources/cheatsheets/ <br>
 Tidyverse: https://www.tidyverse.org/learn/ <br>
 Data manipulation: https://statsandr.com/blog/data-manipulation-in-r/<br> <br>
-##Visualization: <br>
+## Visualization: <br>
 Colorbrewer: https://colorbrewer2.org/ <br>
 The R Graph Gallery: https://www.r-graph-gallery.com/ <br>
 IGraph: https://igraph.org/r/html/latest/igraph_demo.html <br>
 Circlize: https://github.com/jokergoo/circlize <br> <br>
-##Package repositories:  <br>
-
+## Package repositories:  <br>
 CRAN: https://cran.r-project.org/web/packages/available_packages_by_name.html <br>
-Bioconductor: https://www.bioconductor.org/packages/release/BiocViews.html#___Software <br> <br>
-Bioinformatics Training:  <br>
+Bioconductor: https://www.bioconductor.org/packages/release/BiocViews.html#___Software <br><br>
+## Bioinformatics Training:  <br>
 Bioinformatics.ca: https://bioinformatics.ca/workshops/ <br>
 Calcul Quebec: https://www.calculquebec.ca/en/academic-research-services/procedures/ <br>
 MiCM: https://www.mcgill.ca/micm/training/workshops-series/workshop-materials <br> <br>
-##Platforms: <br>
+## Platforms: <br>
 Github (https://github.com/) : Many packages in development live here, can report issues, participate in discussion forums and host your own code. <br>
 Compute Canada (https://www.computecanada.ca/research-portal/): Canadian computational resources consortium, maintains supercomputing clusters that you can access for free, provides a lot of technical support.   <br> <br>
-##Statistics:<br>
+## Statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
 Resources for plotting and assumption testing: https://remi-theriault.com/tutorials/ <br>
 
