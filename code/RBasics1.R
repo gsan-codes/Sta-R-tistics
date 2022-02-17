@@ -13,7 +13,7 @@ sex          # typing the name of the object
 class(sex)   # type of the object
 
 #boolean
-result <- weight > 50
+result <- (weight > 50)
 result
 
 ###Slide 9--------------------------------------------------
@@ -32,7 +32,6 @@ new_number
 #this will not work properly
 class(sex)
 sex <- as.numeric(sex)
-class(sex)
 
 #double to integer
 weight <- as.integer(weight)
@@ -66,34 +65,31 @@ group <- c("MDD", "Ctrl", "MDD", "Ctrl", "Ctrl")
 meta.data <- data.frame(age, group) #create dataframe
 meta.data
 typeof(meta.data$age)
-meta.data[3, "group"]
 
 ###Slide 13--------------------------------------------------
 #Check the current directory for Windows and Mac
 getwd()
 #Example of setting a new directory for Windows
-setwd("C:/Users/harukamitsuhashi/Desktop/R_Workshop_2022")
+setwd("C:/Users/harukamitsuhashi/Desktop/Sta-R-tistics-main")
 #Example of setting a new directory for Macs
-setwd("/Users/harukamitsuhashi/Desktop/R_Workshop_2022")
+setwd("/Users/harukamitsuhashi/Desktop/Sta-R-tistics-main")
 #List files in the current direcotry
 list.files()
 
-##Exercise1--set your working directory to a folder named "R_Workshop_2022" (You have to create the folder first)
+##Exercise1--set your working directory to a folder named "Sta-R-tistics-main" (You have to create the folder first)
 
 ###Slide 14--------------------------------------------------
 #set directory
-setwd("/Users/harukamitsuhashi/OneDrive\ -\ McGill\ University/staRtistics_2021-2022/")
+setwd("/Users/harukamitsuhashi/Desktop/Sta-R-tistics-main")
 #Read files seperated by comma
-data1 <- read.csv(file = "Datasets/Billboard_Hot_weekly_charts/HotStuff.csv", sep = ',')
-data1
+data1 <- read.csv(file = "datasets/Billboard_Hot_weekly_charts/HotStuff.csv", sep = ',')
+head(data1)
 
 #Read files seperated by tab
 data2<- read.csv(file = "Datasets/Billboard_Hot_weekly_charts/Hot100AudioFeatures.tsv", sep = '\t', header = TRUE) 
 head(data2)
-data2[33:37,]
 
-##Exercise2- read "MentalHealthTech_Kaggle/survey.csv" as "my.my.data1" 
-my.data1 <- read.csv(file = "Datasets/MentalHealthTech_Kaggle/survey.csv", sep = ',')
+##Exercise2- read "MentalHealthTech_Kaggle/survey.csv" as "my.data1" 
 
 ###Slide 15--------------------------------------------------
 
@@ -103,7 +99,6 @@ head(my.data1) #check first few rows of data
 dim(my.data1) #check number of rows and columns
 colnames(my.data1) #list column names
 rownames(my.data1) #list row names
-dim(my.data1)
 
 #List specific part of data using [row:row,column:column]
 my.data1[1:5,] #list 1-5 rows of data
