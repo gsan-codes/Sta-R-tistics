@@ -1,6 +1,6 @@
 library(tidyverse)
 
-setwd("C:/Users/<username>/Downloads/R_Workshop_2022")
+setwd("C:/Users/<username>/Downloads/Sta-R-tistics")
 
 #Slides 8-10
 #Example 1: filtering, grouping, and summarizing tibbles with dplyr
