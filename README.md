@@ -19,8 +19,8 @@ Introduction to the basics of R and statistics with the aim of making you a stat
 3) Statistics I (descriptive stats, hypothesis testing, chi-square, effect sizes) [March 10; 5-7pm]
 4) Statistics II (bootstrapping, permutations, ANOVAs) [March 17; 5-7pm]
 5) Statistics III (regression models, model fitting, model selection) [March 24; 5-7pm]
-6) Graphing and Visualization (ggplot, heatmaps, corrplot, etc.) [March 31; 5-7pm]<br>
 [ April Exams - NO CLASS ]<br>
+6) Graphing and Visualization (ggplot, heatmaps, corrplot, etc.) [early May]<br>
 7) Bayesian Statistics I (comparing Bayesian vs inferential statistics) [early May]
 8) Bayesian Statistics II (MCMC sampling, t-test, Bayesian regression models) [early May]
 
