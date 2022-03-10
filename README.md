@@ -49,6 +49,7 @@ Data manipulation: https://statsandr.com/blog/data-manipulation-in-r/<br> <br>
 ## Visualization: <br>
 Colorbrewer: https://colorbrewer2.org/ <br>
 The R Graph Gallery: https://www.r-graph-gallery.com/ <br>
+R Charts: https://r-charts.com/
 IGraph: https://igraph.org/r/html/latest/igraph_demo.html <br>
 Circlize: https://github.com/jokergoo/circlize <br> <br>
 ## Package repositories:  <br>
