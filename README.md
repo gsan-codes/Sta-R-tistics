@@ -62,8 +62,16 @@ MiCM: https://www.mcgill.ca/micm/training/workshops-series/workshop-materials <b
 ## Platforms: <br>
 Github (https://github.com/) : Many packages in development live here, can report issues, participate in discussion forums and host your own code. <br>
 Compute Canada (https://www.computecanada.ca/research-portal/): Canadian computational resources consortium, maintains supercomputing clusters that you can access for free, provides a lot of technical support.   <br> <br>
-## Statistics:<br>
+## Frequentist statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
 Resources for plotting and assumption testing: https://remi-theriault.com/tutorials/ <br>
-
+Resources for hierarchical models:https://github.com/mkfreeman/hierarchical-models/blob/master/generate-data.R/ <br>
+http://mfviz.com/hierarchical-models/
+## Bayesian statistics:<br>
+https://www.statlect.com/fundamentals-of-statistics/Markov-Chain-Monte-Carlo-diagnostics
+https://cran.r-project.org/web/packages/BEST/vignettes/BEST.pdf
+https://jkkweb.sitehost.iu.edu/articles/Kruschke2013JEPG.pdf
+https://www.youtube.com/watch?v=fhw1j1Ru2i0
+http://journals.sagepub.com/doi/10.1177/2515245918771304
+https://cran.r-project.org/web/packages/bridgesampling/vignettes/bridgesampling_stan_ttest.html
 
