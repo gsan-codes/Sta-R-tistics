@@ -1,27 +1,40 @@
 #######################################################################################
 #
 #
-#                                 Class XXX Bayes Theory
+#                                 Class 6 Bayes Theory
 #                             Examples of a Bayesian analysis
 #
 #
 #######################################################################################
 ######
-# See slides on GitHub for theory
+# See slides on GitHub for theory!!!!
 #####
+
+
 ########## simulate Monty Hall problem
+##################################################
+# reminder: Monty Hall problem (see slides) helps us understand the difference 
+# in how frequentest and Bayesian stats interpret probabilities 
+# see slides for Bayes answer to the MHP, see below for the frequentest 
+# frequentist describe probability as a long run
+
+# we simulate the MHP many times to get probability 
 stay=c()
 switch=c()
+prob_stay=c()
+prob_switch=c()
 
-for (i in 1:10000){
-  doors=1:3
-  door_win=sample(1:3,1)
-  door_pick=sample(1:3,1)
-  door_host_open=doors[!(1:3 %in% c(door_pick,door_win))]
+num_sim =1000
+
+for (i in 1:num_sim){
+  doors=1:3 # there are three doors to choose from 
+  door_win=sample(1:3,1) # pick random door to be winner
+  door_pick=sample(1:3,1) # pick random door to be the one we sample 
+  door_host_open=doors[!(1:3 %in% c(door_pick,door_win))] # pick random door host opens 
   if (length(door_host_open)==2){
     door_host_open= door_host_open[sample(1:2,1)]
   }
-  
+  # save if we win
   if (door_pick==door_win) {
     stay[i]=1
     switch[i]=0
@@ -29,17 +42,17 @@ for (i in 1:10000){
     stay[i]=0
     switch[i]=1
   }
-  
+  # compute long run probability for i number of simulations 
+  # up to this point 
   prob_stay[i]=sum(stay)/length(stay)
   prob_switch[i]=sum(switch)/length(switch)
   
   
 }
 
-sum(stay)/10000
-sum(switch)/10000
-
-plot(prob_stay)
+# these are similar to the ones Bayes would predict based on computation 
+sum(stay)/num_sim
+sum(switch)/num_sim
 
 # Plot probability over time
 plot(prob_stay, type = "b", frame = FALSE, pch = 19, 
@@ -48,9 +61,80 @@ lines(prob_switch, pch = 18, col = "blue", type = "b", lty = 2)
 legend("topleft", legend=c("Stay", "Switch"),
        col=c("red", "blue"), lty = 1:2, cex=0.8)
 
+
+
+#
+#         Exercise 2
+#
+####################################
+# add an extra door: compute the frequentist and Bayesian probabilities!!!!
+
+# Bayesian 
+# p(A|B)= 𝑝(𝐵│𝐴)∗𝑝(𝐴)/ p(b)
+
+pa= 1/4 # the probability mariah is behind door A
+pb= (1/3 + 0 + 1/2 + 1/2)/4 # the probability the host will open door B
+pba= 1/3
+pab=pba*pa/pb
+# your probability of mariah being behind door A given the host opened door B is 0.25
+# thus the probability she is behind any other door is 0.75/2
+
+
+# frequenstist 
+stay=c()
+switch=c()
+prob_stay=c()
+prob_switch=c()
+
+num_sim =100000
+
+for (i in 1:num_sim){
+  doors=1:4 # there are three doors to choose from 
+  door_win=sample(1:4,1) # pick random door to be winner
+  door_pick=sample(1:4,1) # pick random door to be the one we sample 
+  door_host_open=doors[!(1:4 %in% c(door_pick,door_win))] # pick random door host opens 
+  door_host_open= door_host_open[sample(1:length(door_host_open),1)]
+  # save if we win
+  if (door_pick==door_win) {
+    stay[i]=1
+    switch[i]=0
+  } else{
+    stay[i]=0
+    switch[i]=0.5
+  }
+  # compute long run probability for i number of simulations 
+  # up to this point 
+  prob_stay[i]=sum(stay)/length(stay)
+  prob_switch[i]=sum(switch)/length(switch)
+  
+}
+
+# these are similar to the ones Bayes would predict based on computation 
+sum(stay)/num_sim
+sum(switch)/num_sim
+
+# Plot probability over time
+plot(prob_stay, type = "b", frame = FALSE, pch = 19, 
+     col = "red", xlab = "iteration", ylab = "probability", ylim = c(0,1))
+lines(prob_switch, pch = 18, col = "blue", type = "b", lty = 2)
+legend("topleft", legend=c("Stay", "Switch"),
+       col=c("red", "blue"), lty = 1:2, cex=0.8)
+
+
+
+
 ########## MCMC sampling 
+##################################################
+
+# look at slides for summary of what the MCMC algorithm does
+# let us apply it using R packages as wrappers 
+# and let us interpret the outputs of an example MCMC 
+# this will be useful when you use MCMC to sample your Bayesian parameters
+
+# code adapted from: https://theoreticalecology.wordpress.com/2010/09/17/metropolis-hastings-mcmc-in-r/
 library(coda)
-# set up ground truth for sampling 
+# set up ground truth of our parameters
+# we will use MCMC to sample a regression 
 trueA <- 5
 trueB <- 0
 trueSd <- 10
@@ -60,8 +144,8 @@ sampleSize <- 31
 x <- (-(sampleSize-1)/2):((sampleSize-1)/2)
 y <-  trueA * x + trueB + rnorm(n=sampleSize,mean=0,sd=trueSd)
 
-# define useful functions
-    likelihood <- function(param){
+# define useful functions for sampling:
+likelihood <- function(param){
           a = param[1]
           b = param[2]
           sd = param[3]
@@ -71,7 +155,7 @@ y <-  trueA * x + trueB + rnorm(n=sampleSize,mean=0,sd=trueSd)
           sumll = sum(singlelikelihoods)
           return(sumll)    
     }
-    prior <- function(param){
+prior <- function(param){
           a = param[1]
           b = param[2]
           sd = param[3]
@@ -80,10 +164,11 @@ y <-  trueA * x + trueB + rnorm(n=sampleSize,mean=0,sd=trueSd)
           sdprior = dunif(sd, min=0, max=30, log = T)
           return(aprior+bprior+sdprior)
     }
-    proposalfunction <- function(param){
+proposalfunction <- function(param){
           return(rnorm(3,mean = param, sd= c(0.1,0.5,0.3)))
-    }
-    run_metropolis_MCMC <- function(startvalue, iterations, burnin, thinning ){
+}
+
+run_metropolis_MCMC <- function(startvalue, iterations, burnin, thinning ){
           chain = array(dim = c(iterations+1,3))
           chain[1,] = startvalue
           for (i in 1:iterations){
@@ -101,52 +186,87 @@ y <-  trueA * x + trueB + rnorm(n=sampleSize,mean=0,sd=trueSd)
           return(mcmc(chain))
     }
 
-# sample chain
+# now that we have some functions we can call them to mcmc sample the parameters
+# we use the mcmc sampler to sample 100 samples
+# plot the outputs of the 3 variables 
+
+# note: trueA <- 5
+#       trueB <- 0
+#       trueSd <- 10
+
 chain1 = run_metropolis_MCMC(1, 100, 1,1)
-summary(chain1)
+summary(chain1) # summary info about the chains 
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 10, type = "correlation", plot= TRUE)
 
 
+#
+#         Exercise 2
+#
+####################################
+# sample more from the mcmc, what do you see?
+# what if you play with burn in and thinning, what does it do?
+
+# let us sample more
+# what looks different? 
 chain1 = run_metropolis_MCMC(1, 1000, 1,1)
 summary(chain1)
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 
-chain1 = run_metropolis_MCMC(1, 1000, 100,1)
-summary(chain1)
-plot(chain1)
-acf(chain1[,3], lag.max= 100, type = "correlation", plot= TRUE)
-
+#  let us sample more
 chain1 = run_metropolis_MCMC(1, 10000, 1,1)
 summary(chain1)
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
-# thinning examples
-chain1 = run_metropolis_MCMC(1, 10000, 1,2)
-summary(chain1)
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
-
+# let us try thinning 
 chain1 = run_metropolis_MCMC(1, 10000, 1,10)
 summary(chain1)
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 # Burn in example 
 chain1 = run_metropolis_MCMC(1, 10000, 500,1)
 summary(chain1)
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 chain1 = run_metropolis_MCMC(1, 10000, 500,10)
 summary(chain1)
+hist(chain1[,1])
+hist(chain1[,2])
+hist(chain1[,3])
 plot(chain1)
 acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 
+
+
+#######################################################################################
+#
+#
+#                                 Class 7 Bayes stats 
+#                             Examples of a Bayesian analysis
+#
+#
+#######################################################################################
 
 ########## Bayesian T-Test
 library(BEST)
@@ -187,10 +307,39 @@ ggplot(BESTout_study1[1:5001,], aes(x=sampleNum, y=nu)) + geom_line()+ theme_min
 ggplot(BESTout_study1[1:5001,], aes(x=sampleNum, y=sigma1)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
 ggplot(BESTout_study1[1:5001,], aes(x=sampleNum, y=sigma2)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
 
+
+# let use assume we have some priors:
+priors <- list(-90,90,1,1)
+BESTout_study1 <- BESTmcmc(sample1,sample2, priors=priors, parallel=FALSE, numSavedSteps =5000 , thinSteps = 2,burnInSteps =500 )
+plot(BESTout_study1)
+
+plot(BESTout_study1, ROPE=c(-0.1,0.1))
+# play with the priors and see what happens to the posteriors
+# play with the sample size and see what happens to the posteriors
+
+
+mean_diff_posterior= BESTout_study1$mu1 - BESTout_study1$mu2
+sum(mean_diff_posterior >0)/length(mean_diff_posterior) # prob mean diff is greater than 0
+sum(mean_diff_posterior <0)/length(mean_diff_posterior) # prob mean diff is less than 0 
+# ROPE between -2.2 and 2.2
+sum(mean_diff_posterior >-2.2 & mean_diff_posterior< 2.2)/length(mean_diff_posterior)
+
+#
+#         Exercise 1
+#
+####################################
+# now that we have posteriors for our effect we can use the outputs as inputs (priors) in a new experiment 
+# use the mean of each parameter distribution as priors in a new BEST t test 
+# use the unused data to test the hypothesis again
+# what does the priors do to the posterior distribution?
+# running iteratively a Bayesian analysis modifies your _______________? 
+# the more data, the more evidence, the narrower your posteroir 
+
+
 priors <- list(muM = c(mean(BESTout_study1$mu1),mean(BESTout_study1$mu2)), muSD = c(mean(BESTout_study1$sigma1), mean(BESTout_study1$sigma2)))
 
-sample1=train$loudness[train$spotify_track_explicit==FALSE]
-sample2=train$loudness[train$spotify_track_explicit==TRUE]
+sample1=test$loudness[train$spotify_track_explicit==FALSE]
+sample2=test$loudness[train$spotify_track_explicit==TRUE]
 
 BESTout_study2 <- BESTmcmc(sample1,sample2, priors=priors, parallel=FALSE, numSavedSteps =5000 , thinSteps = 2,burnInSteps =500 )
 
@@ -212,11 +361,15 @@ par(new=T)
 plot(BESTout_study2[,1:5],xlim=c(-3,0),col = scales::alpha(cols[2], 0.2))
 
 
+
+
+# Now let us try the same thing with a Bayesian version of a PAIRED t-test
+##############################
 # Example of paired t-test where we will
 data("mice2",package = "datarium")
 head(mice2)
 diff_mice2=mice2$after-mice2$before
-# frequentists paifred-ttest
+# frequentists paired-ttest
 t.test(mice2$after,mice2$before, paired = TRUE, alternative = "two.sided")
 
 BESTout_mice2 <- BESTmcmc(diff_mice2, parallel=FALSE, numSavedSteps =100 , thinSteps = 1,burnInSteps =0 )
@@ -230,6 +383,7 @@ ggplot(BESTout_mice2[1:102,], aes(x=sampleNum, y=sigma)) + geom_line()+ theme_mi
 
 
 ########## Bayesian Linear Regression 
+############################################################
 suppressPackageStartupMessages(library(mlbench))
 suppressPackageStartupMessages(library(rstanarm))
 suppressPackageStartupMessages(library(bayestestR))
