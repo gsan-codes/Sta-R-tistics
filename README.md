@@ -20,9 +20,9 @@ Introduction to the basics of R and statistics with the aim of making you a stat
 4) Statistics II (bootstrapping, permutations, ANOVAs) [March 17; 5-7pm]
 5) Statistics III (regression models, model fitting, model selection) [March 24; 5-7pm]
 [ April Exams - NO CLASS ]<br>
-6) Graphing and Visualization (ggplot, heatmaps, corrplot, etc.) [early May]<br>
-7) Bayesian Statistics I (comparing Bayesian vs inferential statistics) [early May]
-8) Bayesian Statistics II (MCMC sampling, t-test, Bayesian regression models) [early May]
+6) Bayesian Statistics I (comparing Bayesian vs inferential statistics) [May 5th]
+7) Bayesian Statistics II (MCMC sampling, t-test, Bayesian regression models) [May 13th]
+8) 6) Graphing and Visualization (ggplot, heatmaps, corrplot, etc.) [May 19th]<br>
 
 
 If you have any questions please contact jason.dasilvacastanheira@mail.mcgill.ca or GSAN at gsan.mcgill@gmail.com
