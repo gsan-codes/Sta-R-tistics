@@ -19,6 +19,19 @@ hot100=read.csv(
   'C:/Users/jasondsc/Documents/GitHub/Sta-R-tistics/datasets/Billboard_Hot_weekly_charts/Hot100AudioFeatures.tsv', 
   sep = "\t")
 
+# Let us dummy code our variables and save them as factors 
+hot100_4anova$key_binary=plyr::mapvalues(hot100_4anova$key_binary, c(TRUE, FALSE), c(1,0))
+hot100_4anova$spotify_track_explicit=plyr::mapvalues(hot100_4anova$spotify_track_explicit, c(TRUE, FALSE), c(1,0))
+
+hot100_4anova$key_binary=as.factor(hot100_4anova$key_binary)
+hot100_4anova$spotify_track_explicit=as.factor(hot100_4anova$spotify_track_explicit)
+
+lm0=lm(danceability ~ spotify_track_explicit + key_binary + spotify_track_explicit*key_binary, hot100_4anova)
+summary(lm0)
+sjPlot::tab_model(lm0)
+
+
+# effect coding 
 hot100_4anova=hot100[!is.na(hot100$spotify_track_explicit),] # remove nas
 hot100_4anova=hot100_4anova[!is.na(hot100_4anova$key),] # remove nas
 hot100_4anova$key_binary=as.numeric(hot100_4anova$key)>=6
@@ -157,7 +170,7 @@ epilepsy$Trt=as.factor(epilepsy$Trt)
 
 lm0=lm(count ~ Age  + Trt, epilepsy)
 summary(lm0)
-
+sjPlot::tab_model(lm0)
 
 ## The above model (you built) is good, but it can be better.....
 # We can take into account how observations are in fact nested within participants (repeated measures design)
@@ -167,6 +180,14 @@ summary(lm0)
 lme0=lme4::lmer(count ~ Age  + Trt + (1| patient), epilepsy)
 summary(lme0)
 sjPlot::tab_model(lme0)
+# now you see that you have a seprate section for random effects!
+# Note that you have the ICC which is like an ANOVA in the sense that 
+# it measures the ratio of variability within vs between groups
+# It ranges from 0 to 1, where the higher the ICC the more
+# your data is clustered and thus less independent 
+
+
+
 # we now see that the outputs of the regression are broken down into both fixed and random effects
 # fixed effects are between and random are repeated (see slides for details)
 coef(summary(lme0)) # this will give you the fixed effects reported in summary 
