@@ -65,7 +65,7 @@ Compute Canada (https://www.computecanada.ca/research-portal/): Canadian computa
 ## Frequentist statistics:<br>
 Resource for ANOVA: https://statsandr.com/blog/anova-in-r/ <br>
 Resources for plotting and assumption testing: https://remi-theriault.com/tutorials/ <br>
-Resources for hierarchical models: https://github.com/mkfreeman/hierarchical-models/blob/master/generate-data.R/ <br>
+Resources for hierarchical models: https://github.com/mkfreeman/hierarchical-models/blob/master/generate-data.R/, https://m-clark.github.io/mixed-models-with-R/<br>
 http://mfviz.com/hierarchical-models/
 ## Bayesian statistics:<br>
 https://www.statlect.com/fundamentals-of-statistics/Markov-Chain-Monte-Carlo-diagnostics
