@@ -401,19 +401,30 @@ summary(model_freq)
 confint(model_freq)
 tab_model(model_freq)
 
-
+# now let us take a look at the kinds of priors we can use 
 ?priors
 model_bayes <- stan_glm(Sepal.Length~ Petal.Width +Petal.Length +Species, data=data, seed=1111, prior = NULL, warmup= 300, chains=3, iter= 5000)
 
 # trace plots 
-mcmc_trace(as.array(model_bayes))
-mcmc_trace_data(model_bayes) # get trace raw data
+mcmc_trace(as.array(model_bayes)) # make trace plots
+traces=mcmc_trace_data(model_bayes) # get trace raw data to manipulate as you need
+
+# we can do a similar thing and compute a probability 
+PW_trace=traces$value[traces$parameter== 'Petal.Width']
+
+
+sum(PW_trace >0)/length(PW_trace) # prob mean diff is greater than 0
+sum(PW_trace <0)/length(PW_trace) # prob mean diff is less than 0 
+# ROPE between -2.2 and 2.2
+sum(PW_trace >-0.1 & PW_trace< 0.1)/length(PW_trace)
+
+
 
 # plot auto correlation function of mcmc samples
 plot(model_bayes, "acf")
 mcmc_acf(model_bayes)
 
-mcmc_combo(as.array(model_bayes))
+mcmc_combo(as.array(model_bayes)) # plots the trace plots and histograms 
 
 mcmc_dens(as.array(model_bayes))
 mcmc_dens_chains_data(model_bayes) # gets data 4 density of posteriors 
@@ -432,10 +443,67 @@ model_bayes2 <- stan_glm(Sepal.Length~ Petal.Width +Petal.Length , data=data, se
 bayesfactor(bridge_sampler(model_bayes), bridge_sampler(model_bayes2))
 
 
+# let us play with the priors
+model_bayes2 <- stan_glm(Sepal.Length~ Petal.Width +Petal.Length , data=data, seed=1111, prior = cauchy(), warmup= 300, chains=3, iter= 5000)
 
 
-# Run code in BRMS (Bayesian Regressions)
+# note that you can set the priors of the intercept and regression coeffecints (betas) sepertaley 
+model_bayes2 <- stan_glm(Sepal.Length~ Petal.Width +Petal.Length , data=data, seed=1111, prior = normal(0.2),prior_intercept = cauchy(0,10), warmup= 300, chains=3, iter= 5000)
+
+
+
+
+#
+#         Exercise 2
+#
+####################################
+# split up your the hot 100 dataset, run the bayesian regression  on the first data and use the estimates of the
+# posteriors as priors for your second dataset! You can just do it for the intercpet 
+
+# model to fit: danceability~ loudness +valence
+
+hot100=read.csv('/Users/jasondsc/Documents/GitHub/Sta-R-tistics/data/Hot_100_Audio_Features.csv')
+# clean data and split into two datasets
+hot100=hot100[!is.na(hot100$spotify_track_explicit),]
+hot100=hot100[!is.na(hot100$loudness),]
+ids=sample(nrow(hot100), ceiling(nrow(hot100)/3))
+train=hot100[ids,]
+test=hot100[!(seq(1,nrow(hot100)) %in% ids),]
+
+
+model_bayes2 <- stan_glm(danceability~ loudness +valence , data=train, seed=1111, prior = NULL, warmup= 300, chains=3, iter= 5000)
+prior_summary(model_bayes2)
+posteriors=mcmc_trace_data(model_bayes2)
+
+mean(posteriors$value[posteriors$parameter =='(Intercept)'])
+sd(posteriors$value[posteriors$parameter =='(Intercept)'])
+
+mean(posteriors$value[posteriors$parameter =='loudness'])
+sd(posteriors$value[posteriors$parameter =='loudness'])
+
+mean(posteriors$value[posteriors$parameter =='valence'])
+sd(posteriors$value[posteriors$parameter =='valence'])
+
+
+model_bayes2 <- stan_glm(danceability~ loudness +valence , data=test, seed=1111, 
+                         prior = normal(c(mean(posteriors$value[posteriors$parameter =='loudness']),
+                                          mean(posteriors$value[posteriors$parameter =='valence'])),
+                                        c(sd(posteriors$value[posteriors$parameter =='loudness']),
+                                          sd(posteriors$value[posteriors$parameter =='valence']))),
+                         prior_intercept = normal(mean(posteriors$value[posteriors$parameter =='(Intercept)']),
+                                                  sd(posteriors$value[posteriors$parameter =='(Intercept)'])),
+                         warmup= 300, chains=3, iter= 5000)
+
+prior_summary(model_bayes2)
+# Hierarchical regressions using a Bayesian framework
+# BRMS (Bayesian Regressions) Package
 ####################################################################
+# please note that these packages are WRAPPER functions
+# the code is implemented in STAN, JAGS etc
+# you can learn to code these langauges and then you will
+# ahve more flexibility in the TYPE of models you fit
+# otherwise you will be limited to the wrapper functions of the packages
+# described herin 
 library(brms)
 # Let us look at an experiment where participants preformed both a Flanker AND a Stroop Task
 data=read.csv('~/Documents/GitHub/Sta-R-tistics/data/Cognitive_control.csv')
