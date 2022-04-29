@@ -8,8 +8,8 @@ Introduction to the basics of R and statistics with the aim of making you a stat
       1. Intro to Stats 1 (Descriptive stats, Confidence Intervals, Hypothesis testing, effect sizes)
       2. Intro to Stats 2 (bootstrapping, permutations, ANOVAs)
       3. Intro to Stats 3 (regression models, Hierarchical regressions, model fitting, model selection)
-4. Graphing and Visualization (ggplot, heatmaps, corrplot)
-5. Bayesian Statictics   
+4. Bayesian Statictics
+5. Graphing and Visualization (ggplot, heatmaps, corrplot)
 
 ## See the tentative schedule below: 
 
