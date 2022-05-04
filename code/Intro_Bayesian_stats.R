@@ -72,46 +72,15 @@ legend("topleft", legend=c("Stay", "Switch"),
 # Bayesian 
 # p(A|B)= 𝑝(𝐵│𝐴)∗𝑝(𝐴)/ p(b)
 
-pa= 1/4 # the probability mariah is behind door A
-pb= (1/3 + 0 + 1/2 + 1/2)/4 # the probability the host will open door B
-pba= 1/3
-pab=pba*pa/pb
+
 # your probability of mariah being behind door A given the host opened door B is 0.25
 # thus the probability she is behind any other door is 0.75/2
 
 
 # frequenstist 
-stay=c()
-switch=c()
-prob_stay=c()
-prob_switch=c()
-
-num_sim =100000
-
-for (i in 1:num_sim){
-  doors=1:4 # there are three doors to choose from 
-  door_win=sample(1:4,1) # pick random door to be winner
-  door_pick=sample(1:4,1) # pick random door to be the one we sample 
-  door_host_open=doors[!(1:4 %in% c(door_pick,door_win))] # pick random door host opens 
-  door_host_open= door_host_open[sample(1:length(door_host_open),1)]
-  # save if we win
-  if (door_pick==door_win) {
-    stay[i]=1
-    switch[i]=0
-  } else{
-    stay[i]=0
-    switch[i]=0.5
-  }
-  # compute long run probability for i number of simulations 
-  # up to this point 
-  prob_stay[i]=sum(stay)/length(stay)
-  prob_switch[i]=sum(switch)/length(switch)
-  
-}
 
 # these are similar to the ones Bayes would predict based on computation 
-sum(stay)/num_sim
-sum(switch)/num_sim
+
 
 # Plot probability over time
 plot(prob_stay, type = "b", frame = FALSE, pch = 19, 
@@ -212,51 +181,12 @@ acf(chain1[,1], lag.max= 10, type = "correlation", plot= TRUE)
 
 # let us sample more
 # what looks different? 
-chain1 = run_metropolis_MCMC(1, 1000, 1,1)
-summary(chain1)
-hist(chain1[,1])
-hist(chain1[,2])
-hist(chain1[,3])
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
-
 
 #  let us sample more
-chain1 = run_metropolis_MCMC(1, 10000, 1,1)
-summary(chain1)
-hist(chain1[,1])
-hist(chain1[,2])
-hist(chain1[,3])
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 # let us try thinning 
-chain1 = run_metropolis_MCMC(1, 10000, 1,10)
-summary(chain1)
-hist(chain1[,1])
-hist(chain1[,2])
-hist(chain1[,3])
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
 
 # Burn in example 
-chain1 = run_metropolis_MCMC(1, 10000, 500,1)
-summary(chain1)
-hist(chain1[,1])
-hist(chain1[,2])
-hist(chain1[,3])
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
-
-chain1 = run_metropolis_MCMC(1, 10000, 500,10)
-summary(chain1)
-hist(chain1[,1])
-hist(chain1[,2])
-hist(chain1[,3])
-plot(chain1)
-acf(chain1[,1], lag.max= 100, type = "correlation", plot= TRUE)
-
-
 
 
 #######################################################################################
@@ -334,33 +264,6 @@ sum(mean_diff_posterior >-2.2 & mean_diff_posterior< 2.2)/length(mean_diff_poste
 # what does the priors do to the posterior distribution?
 # running iteratively a Bayesian analysis modifies your _______________? 
 # the more data, the more evidence, the narrower your posteroir 
-
-
-priors <- list(muM = c(mean(BESTout_study1$mu1),mean(BESTout_study1$mu2)), muSD = c(mean(BESTout_study1$sigma1), mean(BESTout_study1$sigma2)))
-
-sample1=test$loudness[train$spotify_track_explicit==FALSE]
-sample2=test$loudness[train$spotify_track_explicit==TRUE]
-
-BESTout_study2 <- BESTmcmc(sample1,sample2, priors=priors, parallel=FALSE, numSavedSteps =5000 , thinSteps = 2,burnInSteps =500 )
-
-plot(BESTout_study2)
-print(BESTout_study2)
-plotAll(BESTout_study2)
-
-BESTout_study2$sampleNum=1:5001
-ggplot(BESTout_study2[1:5001,], aes(x=sampleNum, y=mu1)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
-ggplot(BESTout_study2[1:5001,], aes(x=sampleNum, y=mu2)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
-ggplot(BESTout_study2[1:5001,], aes(x=sampleNum, y=nu)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
-ggplot(BESTout_study2[1:5001,], aes(x=sampleNum, y=sigma1)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
-ggplot(BESTout_study2[1:5001,], aes(x=sampleNum, y=sigma2)) + geom_line()+ theme_minimal() + xlab(label = "Sample number")
-
-cols =c("#87ceeb", "#e37f86")
-# Overlay plots 
-plot(BESTout_study1[,1:5], xlim=c(-3,0),col = scales::alpha(cols[1], 0.2))
-par(new=T)
-plot(BESTout_study2[,1:5],xlim=c(-3,0),col = scales::alpha(cols[2], 0.2))
-
-
 
 
 # Now let us try the same thing with a Bayesian version of a PAIRED t-test
@@ -462,39 +365,6 @@ model_bayes2 <- stan_glm(Sepal.Length~ Petal.Width +Petal.Length , data=data, se
 
 # model to fit: danceability~ loudness +valence
 
-hot100=read.csv('/Users/jasondsc/Documents/GitHub/Sta-R-tistics/data/Hot_100_Audio_Features.csv')
-# clean data and split into two datasets
-hot100=hot100[!is.na(hot100$spotify_track_explicit),]
-hot100=hot100[!is.na(hot100$loudness),]
-ids=sample(nrow(hot100), ceiling(nrow(hot100)/3))
-train=hot100[ids,]
-test=hot100[!(seq(1,nrow(hot100)) %in% ids),]
-
-
-model_bayes2 <- stan_glm(danceability~ loudness +valence , data=train, seed=1111, prior = NULL, warmup= 300, chains=3, iter= 5000)
-prior_summary(model_bayes2)
-posteriors=mcmc_trace_data(model_bayes2)
-
-mean(posteriors$value[posteriors$parameter =='(Intercept)'])
-sd(posteriors$value[posteriors$parameter =='(Intercept)'])
-
-mean(posteriors$value[posteriors$parameter =='loudness'])
-sd(posteriors$value[posteriors$parameter =='loudness'])
-
-mean(posteriors$value[posteriors$parameter =='valence'])
-sd(posteriors$value[posteriors$parameter =='valence'])
-
-
-model_bayes2 <- stan_glm(danceability~ loudness +valence , data=test, seed=1111, 
-                         prior = normal(c(mean(posteriors$value[posteriors$parameter =='loudness']),
-                                          mean(posteriors$value[posteriors$parameter =='valence'])),
-                                        c(sd(posteriors$value[posteriors$parameter =='loudness']),
-                                          sd(posteriors$value[posteriors$parameter =='valence']))),
-                         prior_intercept = normal(mean(posteriors$value[posteriors$parameter =='(Intercept)']),
-                                                  sd(posteriors$value[posteriors$parameter =='(Intercept)'])),
-                         warmup= 300, chains=3, iter= 5000)
-
-prior_summary(model_bayes2)
 # Hierarchical regressions using a Bayesian framework
 # BRMS (Bayesian Regressions) Package
 ####################################################################
